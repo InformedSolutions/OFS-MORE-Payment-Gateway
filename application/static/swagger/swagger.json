@@ -1,0 +1,239 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A RESTful web service, enabling integration with the GOV.UK Notify platform over HTTP protocols alone.",
+    "version": "v1",
+    "title": "GOV.UK Notify Gateway"
+  },
+  "basePath": "/notify-gateway/api/v1",
+  "tags": [
+    {
+      "name": "notifications",
+      "description": "Operations available for dispatching notifications via the GOV.UK Notify platform."
+    },
+	{
+	  "name": "configuration",
+	  "description": "Operations available for configuring settings used by this API."
+	}
+  ],
+  "paths": {
+    "/notifications/email/": {
+      "post": {
+        "tags": [
+          "notifications"
+        ],
+        "summary": "Sends an email via GOV.UK Notify",
+        "operationId": "email",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "SendEmailRequest",
+            "description": "Email notification request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendEmailRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Notification created",
+            "schema": {
+              "$ref": "#/definitions/NotificationCreationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+             "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notifications/sms/": {
+      "post": {
+        "tags": [
+          "notifications"
+        ],
+        "summary": "Sends an SMS via GOV.UK Notify",
+        "operationId": "sms",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "SendSmsRequest",
+            "description": "SMS notification request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendSmsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Notification created",
+            "schema": {
+              "$ref": "#/definitions/NotificationCreationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+             "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notifications/api-key/" : {
+      "put": {
+        "tags": [
+          "configuration"
+        ],
+        "summary": "Sets the GOV.UK Notify API key used by this service",
+        "operationId": "apiKey",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "UpdateApiKeyRequest",
+            "description": "GOV.UK Notify API key",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateApiKeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API Key updated",
+            "schema": {
+              "$ref": "#/definitions/ApiKeyUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+			},
+          "500": {
+             "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SendEmailRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "templateId"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "recipient@email.com"
+        },
+        "templateId": {
+          "type": "string",
+          "format": "uuid",
+          "example": "e6d76c78-5a3d-4808-8389-359cda72d38a"
+        },
+        "personalisation": {
+          "type": "object",
+          "example": {
+            "full_name": "Ms Test Recipient"
+          }
+        },
+        "reference": {
+          "type": "string",
+          "example": "custom-reference-identifier"
+        }
+      }
+    },
+    "SendSmsRequest": {
+      "type": "object",
+      "required": [
+        "phoneNumber",
+        "templateId"
+      ],
+      "properties": {
+        "phoneNumber": {
+          "type": "string",
+          "example": "07791619518"
+        },
+        "templateId": {
+          "type": "string",
+          "format": "uuid",
+          "example": "e6d76c78-5a3d-4808-8389-359cda72d38a"
+        },
+        "personalisation": {
+          "type": "object",
+		  "example": {
+            "full_name": "Ms Test Recipient"
+          }
+        },
+        "reference": {
+          "type": "string",
+          "example": "custom-reference-identifier"
+        }
+      }
+    },
+    "UpdateApiKeyRequest": {
+      "type": "object",
+      "required": [
+        "apiKey"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "example": "dev_api-7c51af0f-8720-4315-8u67-b4f94d7531e0-df9b0c2e-6h50-4102-ae62-9a24cde656ce"
+        }
+      }
+    },
+    "NotificationCreationResponse": {
+      "type": "object",
+      "required": [
+        "notifyId",
+		"message"
+      ],
+      "properties": {
+ 		"message": {
+		  "type": "string",
+		  "example": "Email sent successfully"
+		},
+        "notifyId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "ApiKeyUpdateResponse": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

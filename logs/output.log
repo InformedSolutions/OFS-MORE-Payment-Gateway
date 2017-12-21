@@ -1,0 +1,12 @@
+2017-12-21 13:40:23,974 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 200 3829
+2017-12-21 13:40:24,118 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui.css HTTP/1.1" 200 33780
+2017-12-21 13:40:24,139 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui-standalone-preset.js HTTP/1.1" 200 337975
+2017-12-21 13:40:24,154 django.server INFO     "GET /payment-gateway/static/swagger/print.css HTTP/1.1" 200 48011
+2017-12-21 13:40:24,199 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui-bundle.js HTTP/1.1" 200 1527907
+2017-12-21 13:40:24,552 django.server INFO     "GET /payment-gateway/static/swagger/swagger.json HTTP/1.1" 200 5973
+2017-12-21 13:40:24,896 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-21 13:40:24,909 django.server INFO     "GET /payment-gateway/static/swagger/favicon-16x16.png HTTP/1.1" 200 445
+2017-12-21 13:41:25,328 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-21 13:41:25,878 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-21 13:41:27,067 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-21 13:41:27,272 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
