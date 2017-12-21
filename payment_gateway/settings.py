@@ -48,7 +48,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'payment_gateway.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
