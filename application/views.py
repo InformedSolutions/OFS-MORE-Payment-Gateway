@@ -33,6 +33,7 @@ def place_order(request):
         exceptionarray = [exceptiondata[-3:]]
         log.error(exceptionarray)
         return JsonResponse(ex.__dict__, status=500)
-    
+def change_api_key(request):
+    print("temp")    
 def order_request(data):
     print("temp")
