@@ -10,3 +10,8 @@
 2017-12-21 13:41:25,878 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
 2017-12-21 13:41:27,067 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
 2017-12-21 13:41:27,272 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-21 13:42:45,221 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 200 3830
+2017-12-21 13:42:45,483 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 200 10555
+2017-12-21 13:42:45,631 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-21 13:42:46,630 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-21 13:42:46,898 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
