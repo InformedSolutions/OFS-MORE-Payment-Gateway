@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="1" name="application.tests.TestApi-20171222103858" skipped="0" tests="1" time="0.079">
+	<testcase classname="application.tests.TestApi" name="test_api" time="0.079">
+		<failure message="500 != 200" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 27, in test_api
+    self.assertEqual(response.status_code, 200)
+AssertionError: 500 != 200
+]]>		</failure>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
