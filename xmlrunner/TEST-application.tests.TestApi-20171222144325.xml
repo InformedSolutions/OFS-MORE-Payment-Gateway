@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="application.tests.TestApi-20171222144325" skipped="0" tests="4" time="1.548">
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest" time="0.829"/>
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest2" time="0.047"/>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="0.610"/>
+	<testcase classname="application.tests.TestApi" name="test_badAPIOrderRequest" time="0.062">
+		<error message="local variable 'response' referenced before assignment" type="UnboundLocalError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 69, in test_badAPIOrderRequest
+    self.assertEqual(response.status_code, 200)
+UnboundLocalError: local variable 'response' referenced before assignment
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

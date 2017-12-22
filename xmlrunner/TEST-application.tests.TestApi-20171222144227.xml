@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="1" name="application.tests.TestApi-20171222144227" skipped="0" tests="4" time="2.195">
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest" time="0.211"/>
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest2" time="0.047"/>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="0.608"/>
+	<testcase classname="application.tests.TestApi" name="test_badAPIOrderRequest" time="1.329">
+		<failure message="200 != 400" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 83, in test_badAPIOrderRequest
+    self.assertEqual(response.status_code, 400)
+AssertionError: 200 != 400
+]]>		</failure>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

@@ -94,7 +94,6 @@ def sendEmail(email):
             "reference": "string",
             "templateId": "444d3c6d-024a-46e5-8a79-41309a991453"
         }
-    
     r = requests.post(settings.NOTIFY_URL, data=json.dumps(payload), headers=headers)
     return JsonResponse(json.loads(r.text), status=r.status_code)
 def formatError(ex):

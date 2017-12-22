@@ -288,3 +288,14 @@
 2017-12-22 13:17:21,412 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
 2017-12-22 13:17:47,066 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
 2017-12-22 13:17:52,062 django.server WARNING  "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 401 494
+2017-12-22 14:38:25,947 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:42:28,661 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:43:26,176 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:43:55,957 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:44:17,819 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:44:55,216 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:46:14,939 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:46:45,188 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:47:33,799 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:48:07,379 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
+2017-12-22 14:48:24,962 django.server ERROR    Django serialization error: 'amount' 'This field is required.'

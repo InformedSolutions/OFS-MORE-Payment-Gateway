@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="3" name="application.tests.TestApi-20171222144416" skipped="0" tests="4" time="1.251">
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest2" time="0.047"/>
+	<testcase classname="application.tests.TestApi" name="test_badAPIOrderRequest" time="0.877">
+		<failure message="401 != 400" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 83, in test_badAPIOrderRequest
+    self.assertEqual(r.status_code, 400)
+AssertionError: 401 != 400
+]]>		</failure>
+	</testcase>
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest" time="0.187">
+		<failure message="401 != 400" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 44, in test_badOrderRequest
+    self.assertEqual(response.status_code, 400)
+AssertionError: 401 != 400
+]]>		</failure>
+	</testcase>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="0.140">
+		<failure message="401 != 200" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 27, in test_orderRequest
+    self.assertEqual(response.status_code, 200)
+AssertionError: 401 != 200
+]]>		</failure>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
