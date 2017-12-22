@@ -164,7 +164,7 @@
         },
         "cvc": {
           "type": "string",
-          "example": 35
+          "example": 352
         },
         "expiryMonth": {
           "type": "integer",
@@ -172,7 +172,7 @@
         },
         "expiryYear": {
           "type": "integer",
-          "example": 2017
+          "example": 2018
         },
         "currencyCode": {
           "type": "string",

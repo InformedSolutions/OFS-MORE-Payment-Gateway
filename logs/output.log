@@ -223,3 +223,19 @@
 2017-12-22 11:15:16,592 django.server ERROR    Django serialization error: 'amount' 'This field is required.'
 2017-12-22 11:15:16,593 django.server WARNING  "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 400 73
 2017-12-22 11:15:59,692 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:22:10,649 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:22:39,659 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:22:49,524 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:27:33,297 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-22 11:27:33,935 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 11:27:41,800 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:27:59,351 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-22 11:28:00,192 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 11:28:04,730 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 200 3830
+2017-12-22 11:28:04,969 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui.css HTTP/1.1" 200 33780
+2017-12-22 11:28:05,088 django.server INFO     "GET /payment-gateway/static/swagger/print.css HTTP/1.1" 200 48011
+2017-12-22 11:28:05,105 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui-standalone-preset.js HTTP/1.1" 200 337975
+2017-12-22 11:28:05,134 django.server INFO     "GET /payment-gateway/static/swagger/swagger-ui-bundle.js HTTP/1.1" 200 1527907
+2017-12-22 11:28:05,482 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 200 10555
+2017-12-22 11:28:06,124 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 11:28:11,199 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
