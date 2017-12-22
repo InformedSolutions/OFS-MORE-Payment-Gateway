@@ -47,6 +47,7 @@ def change_api_key(request):
         serializer = APISerializer(data=request.data)
         if serializer.is_valid():
             #API key set
+            global apiKey
             apiKey = request.data['apiKey']
             return JsonResponse({"message":"Api key successfully updated"}, status=200)
         err = formatError(serializer.errors)
@@ -75,11 +76,27 @@ def order_request(data):
     }
     headers = {"content-type": "application/json", "Authorization":apiKey}
 
-
     r = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
-    print(r.text)
+    if r.status_code == 200:
+        res = sendEmail("matthew.styles@informed.com")
+        if res.status_code == 200:
+            return JsonResponse(json.loads(r.text), status=r.status_code)
+        if res.status_code !=201:
+            return JsonResponse(json.loads(r.text), status=res.status_code)
+    return JsonResponse(json.loads(r.text), status=r.status_code)
+        
+def sendEmail(email):
+    headers = {"content-type": "application/json"}
+    payload = {
+            "email": email,
+            "personalisation": {
+        },
+            "reference": "string",
+            "templateId": "444d3c6d-024a-46e5-8a79-41309a991453"
+        }
     
-    return JsonResponse(json.loads(r.text), status=200)
+    r = requests.post(settings.NOTIFY_URL, data=json.dumps(payload), headers=headers)
+    return JsonResponse(json.loads(r.text), status=r.status_code)
 def formatError(ex):
     #Formatting default Django error messages
     err = str(ex).split(":",1)

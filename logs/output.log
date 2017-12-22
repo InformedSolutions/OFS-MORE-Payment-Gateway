@@ -250,3 +250,41 @@
 2017-12-22 11:40:09,044 django.server ERROR    "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 500 16368
 2017-12-22 11:40:30,291 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 50, in change_api_key', "    apiKey = data['apiKey']", "NameError: name 'data' is not defined"]]
 2017-12-22 11:40:30,292 django.server ERROR    "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 500 2
+2017-12-22 11:41:46,017 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 11:42:01,392 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 12:00:11,042 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 12:01:03,309 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 12:01:32,782 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 551
+2017-12-22 12:03:22,673 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 80, in order_request', "    if r['httpStatusCode']!=200:", "TypeError: 'Response' object is not subscriptable"]]
+2017-12-22 12:03:22,675 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:09:30,925 django.server WARNING  "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 400 551
+2017-12-22 12:14:41,412 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 78, in order_request', '    if r.status_code == 200:', "UnboundLocalError: local variable 'r' referenced before assignment"]]
+2017-12-22 12:14:41,413 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:15:14,088 django.server WARNING  "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 400 551
+2017-12-22 12:15:27,758 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 80, in order_request', '    sendEmail()', "TypeError: sendEmail() missing 1 required positional argument: 'self'"]]
+2017-12-22 12:15:27,760 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:17:22,698 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 80, in order_request', '    sendEmail()', "TypeError: sendEmail() missing 1 required positional argument: 'self'"]]
+2017-12-22 12:17:22,699 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:17:47,394 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-22 12:17:47,811 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 304 0
+2017-12-22 12:17:48,399 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 12:17:53,837 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 80, in order_request', '    sendEmail()', "TypeError: sendEmail() missing 1 required positional argument: 'self'"]]
+2017-12-22 12:17:53,838 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:19:46,034 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 80, in order_request', '    res = sendEmail()', "TypeError: sendEmail() missing 1 required positional argument: 'self'"]]
+2017-12-22 12:19:46,035 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:20:31,659 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 81, in order_request', '    if res.status_code == 200:', "AttributeError: 'NoneType' object has no attribute 'status_code'"]]
+2017-12-22 12:20:31,660 django.server ERROR    "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 500 2
+2017-12-22 12:21:07,038 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 201 879
+2017-12-22 12:21:30,730 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 12:58:56,914 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-22 12:58:57,342 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 304 0
+2017-12-22 12:58:58,002 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 12:59:07,113 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 12:59:17,509 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 13:16:12,783 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 13:16:28,520 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 13:16:33,965 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 13:17:11,129 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 13:17:21,412 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 13:17:47,066 django.server INFO     "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 200 43
+2017-12-22 13:17:52,062 django.server WARNING  "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 401 494
