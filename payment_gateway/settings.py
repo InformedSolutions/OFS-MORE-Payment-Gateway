@@ -8,6 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'a8-!v+(p3smzmjqmw%lppt_2=b6@4_+p7lnr)@=74ftunx+-h+'
+WORLDPAY_API = 'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

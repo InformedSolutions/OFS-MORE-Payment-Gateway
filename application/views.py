@@ -9,17 +9,18 @@ from rest_framework.decorators import api_view
 from django.conf import settings
 from rest_framework import status
 from django.test import Client
-
+from django.conf import settings
 
 
 log = logging.getLogger('django.server')
-
+#Move to settings
+apiKey = settings.WORLDPAY_API
 # Create your views here.
 @api_view(['GET'])
 def get_payment(request, id):
     #print(id)
     print(request.path_info)
-    header = {'content-type': 'application/json','Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
+    header = {'content-type': 'application/json','Authorization':apiKey}
     url = "https://api.worldpay.com/v1/"
     #url+=id
     r = requests.get(url, headers=header)
@@ -40,8 +41,23 @@ def place_order(request):
         exceptionarray = [exceptiondata[-3:]]
         log.error(exceptionarray)
         return JsonResponse(ex.__dict__, status=500)
+@api_view(['PUT'])
 def change_api_key(request):
-    print("temp")    
+    try:
+        serializer = APISerializer(data=request.data)
+        if serializer.is_valid():
+            #API key set
+            apiKey = request.data['apiKey']
+            return JsonResponse({"message":"Api key successfully updated"}, status=200)
+        err = formatError(serializer.errors)
+        log.error("Django serialization error: " +err[0] + err[1])
+        return JsonResponse({"message": err[0] + err[1], "error":"Bad Request",}, status=status.HTTP_400_BAD_REQUEST)
+    
+    except Exception as ex:
+        exceptiondata = traceback.format_exc().splitlines()
+        exceptionarray = [exceptiondata[-3:]]
+        log.error(exceptionarray)
+        return JsonResponse(ex.__dict__, status=500)   
 def order_request(data):
     payload = {
     "paymentMethod": {
@@ -57,13 +73,13 @@ def order_request(data):
     "orderDescription": data['orderDescription'],
     "customerOrderCode": data['customerOrderCode']
     }
-    headers = {"content-type": "application/json", "Authorization":"T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57"}
+    headers = {"content-type": "application/json", "Authorization":apiKey}
 
 
     r = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
     print(r.text)
     
-    return JsonResponse({"messag":"working?"}, status=200)
+    return JsonResponse(json.loads(r.text), status=200)
 def formatError(ex):
     #Formatting default Django error messages
     err = str(ex).split(":",1)

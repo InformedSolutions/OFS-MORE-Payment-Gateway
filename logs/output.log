@@ -239,3 +239,14 @@
 2017-12-22 11:28:05,482 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 200 10555
 2017-12-22 11:28:06,124 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
 2017-12-22 11:28:11,199 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:28:43,218 django.server INFO     "GET /payment-gateway/static/swagger/index.html HTTP/1.1" 304 0
+2017-12-22 11:28:43,763 django.server INFO     "GET /payment-gateway/static/swagger/worldpay.json HTTP/1.1" 200 10556
+2017-12-22 11:28:44,431 django.server INFO     "GET /payment-gateway/static/swagger/favicon-32x32.png HTTP/1.1" 200 1141
+2017-12-22 11:28:51,689 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 22
+2017-12-22 11:30:31,706 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 11:35:36,146 django.server INFO     "POST /payment-gateway/api/v1/payments/card/ HTTP/1.1" 200 879
+2017-12-22 11:38:43,105 django.server WARNING  "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 404 2535
+2017-12-22 11:39:11,934 django.server ERROR    "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 500 70216
+2017-12-22 11:40:09,044 django.server ERROR    "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 500 16368
+2017-12-22 11:40:30,291 django.server ERROR    [['  File "C:\\Users\\stylesm\\Desktop\\test\\OFS-MORE-Beta-Secured\\source\\payment_gateway\\application\\views.py", line 50, in change_api_key', "    apiKey = data['apiKey']", "NameError: name 'data' is not defined"]]
+2017-12-22 11:40:30,292 django.server ERROR    "PUT /payment-gateway/api/v1/payments/api-key/ HTTP/1.1" 500 2
