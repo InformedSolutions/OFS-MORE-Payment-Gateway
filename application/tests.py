@@ -60,4 +60,12 @@ class TestApi(unittest.TestCase):
         }
         response = self.client.post('/payment-gateway/api/v1/payments/card/' , json.dumps(input), 'application/json', header=header)
         self.assertEqual(response.status_code, 400)
-    
+    def test_setApiKey(self):
+        #Test updating the APi Key
+        self.client = Client()
+        header = {'content-type': 'application/json'}
+        input = {
+            "apiKey": "T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57"
+        }
+        response = self.client.put('/payment-gateway/api/v1/payments/api-key/' , json.dumps(input), 'application/json' , header=header)
+        self.assertEqual(response.status_code, 200)

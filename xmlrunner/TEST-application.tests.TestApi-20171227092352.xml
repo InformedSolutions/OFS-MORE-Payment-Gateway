@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="application.tests.TestApi-20171227092352" skipped="0" tests="4" time="1.443">
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest" time="0.954"/>
+	<testcase classname="application.tests.TestApi" name="test_badOrderRequest2" time="0.097"/>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="0.392"/>
+	<testcase classname="application.tests.TestApi" name="test_setApiKey" time="0.000"/>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
