@@ -14,9 +14,10 @@ class OrderRequest(models.Model):
     customerOrderCode = models.CharField(max_length=100, blank=False)
     orderDescription = models.CharField(max_length=100, blank=False)
 
+
 class Key(models.Model):
     #API key validation rules
     #Name is a placeholder as there needs to be more than one entry to execute without error
     name = models.CharField(max_length=100, blank=True)
     apiKey = models.CharField(max_length=100, blank=False)
-
+    

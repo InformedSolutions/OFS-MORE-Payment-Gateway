@@ -11,6 +11,7 @@ from rest_framework.test import APIClient
 class TestApi(unittest.TestCase):
     
     def test_orderRequest(self):
+        #test successful order- this is the same as the swagger docs
         self.client = Client()
         header = {'content-type': 'application/json', 'Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
         input = {
@@ -27,7 +28,7 @@ class TestApi(unittest.TestCase):
         response = self.client.post('/payment-gateway/api/v1/payments/card/' , json.dumps(input), 'application/json', header=header)
         self.assertEqual(response.status_code, 200)
     def test_badOrderRequest(self):
-        #worldpay error
+        #Test worldpay error
         self.client = Client()
         header = {'content-type': 'application/json', 'Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
         input = {
@@ -45,7 +46,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         
     def test_badOrderRequest2(self):
-        #serializer error, missing field
+        #Test serializer error, missing field
         self.client = Client()
         header = {'content-type': 'application/json', 'Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
         input = {
