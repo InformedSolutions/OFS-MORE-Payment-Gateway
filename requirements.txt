@@ -5,3 +5,4 @@ coreapi==2.3.3
 PyYAML
 openapi-codec
 unittest-xml-reporting
+requests
