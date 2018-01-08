@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="1" name="application.tests.TestApi-20180108100546" skipped="0" tests="6" time="2.453">
+	<testcase classname="application.tests.TestApi" name="test_getOrderInfo" time="1.304"/>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="0.530"/>
+	<testcase classname="application.tests.TestApi" name="test_serializerError" time="0.047"/>
+	<testcase classname="application.tests.TestApi" name="test_setApiKey" time="0.016"/>
+	<testcase classname="application.tests.TestApi" name="test_worldpayError" time="0.281"/>
+	<testcase classname="application.tests.TestApi" name="test_getOrderInfoError" time="0.275">
+		<failure message="404 != 400" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 85, in test_getOrderInfoError
+    self.assertEqual(response.status_code, 400)
+AssertionError: 404 != 400
+]]>		</failure>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

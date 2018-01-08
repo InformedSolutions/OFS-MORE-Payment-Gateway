@@ -11,20 +11,36 @@ from rest_framework import status
 from django.test import Client
 from django.conf import settings
 
+
 #initiate logging
 log = logging.getLogger('django.server')
 #initiate API key
-apiKey = settings.WORLDPAY_API
+apiKey = settings.WORLDPAY_API_KEY
 
-@api_view(['GET'])
+@api_view(['GET','POST','PUT'])
 def get_payment(request, id):
-    #This method doesn't work, URL doesn't match swagger documentation
-    header = {'content-type': 'application/json','Authorization':apiKey}
-    url = "https://api.worldpay.com/v1/"
-    r = requests.get(url, headers=header)
-    out = str(r.content)
-    return JsonResponse({"Success":out},status=200)
-    JsonResponse({"Error":"didn't work- put real error message"})
+    try:
+        if "card" in id:
+            return place_order(request)
+        elif "api-key" in id:
+
+            return change_api_key(request)
+        else:
+        #Remove testMode when you want to go live
+            header = {'content-type': 'application/json','Authorization':apiKey}
+            response = requests.get("https://api.worldpay.com/v1/orders/" +id +'?testMode=100',  headers=header)
+            out = json.loads(response.text)
+            try:
+                status= out['httpStatusCode']
+                return JsonResponse({"message":out},status=status)
+            except Exception as ex:
+                return JsonResponse({"message":out},status=200)
+    except Exception as ex:
+        exceptiondata = traceback.format_exc().splitlines()
+        exceptionarray = [exceptiondata[-3:]]
+        log.error(exceptionarray)
+        return JsonResponse(ex.__dict__, status=500)
+    
 @api_view(['POST'])
 def place_order(request):
     #This method places an order via WorldPay API- this is almost all error handling and logging
@@ -49,7 +65,7 @@ def change_api_key(request):
             #API key set
             global apiKey
             apiKey = request.data['apiKey']
-            return JsonResponse({"message":"Api key successfully updated"}, status=200)
+            return JsonResponse({"message":"Api key has been updated, please make a test payment to validate the key"}, status=200)
         err = formatError(serializer.errors)
         log.error("Django serialization error: " +err[0] + err[1])
         return JsonResponse({"message": err[0] + err[1], "error":"Bad Request",}, status=status.HTTP_400_BAD_REQUEST)
@@ -75,8 +91,11 @@ def order_request(data):
     "customerOrderCode": data['customerOrderCode']
     }
     headers = {"content-type": "application/json", "Authorization":apiKey}
-    r = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
-    return JsonResponse(json.loads(r.text), status=r.status_code)
+    response = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
+    if response.status_code==200:
+        return JsonResponse(json.loads(response.text), status=201)
+    else:  
+        return JsonResponse(json.loads(response.text), status=response.status_code)
 
 def formatError(ex):
     #Formatting default Django error messages

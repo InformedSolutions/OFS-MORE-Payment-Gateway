@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="2" name="application.tests.TestApi-20180105171457" skipped="0" tests="4" time="1.447">
+	<testcase classname="application.tests.TestApi" name="test_serializerError" time="0.015"/>
+	<testcase classname="application.tests.TestApi" name="test_setApiKey" time="0.005"/>
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="1.243">
+		<failure message="500 != 200" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 29, in test_orderRequest
+    self.assertEqual(response.status_code, 200)
+AssertionError: 500 != 200
+]]>		</failure>
+	</testcase>
+	<testcase classname="application.tests.TestApi" name="test_worldpayError" time="0.184">
+		<failure message="500 != 400" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 46, in test_worldpayError
+    self.assertEqual(response.status_code, 400)
+AssertionError: 500 != 400
+]]>		</failure>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="application.tests.TestApi-20180105172354" skipped="0" tests="5" time="1.330">
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="1.071"/>
+	<testcase classname="application.tests.TestApi" name="test_serializerError" time="0.043"/>
+	<testcase classname="application.tests.TestApi" name="test_setApiKey" time="0.003"/>
+	<testcase classname="application.tests.TestApi" name="test_worldpayError" time="0.185"/>
+	<testcase classname="application.tests.TestApi" name="test_getOrderInfo" time="0.028">
+		<error message="'HttpResponsePermanentRedirect' object has no attribute 'text'" type="AttributeError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 78, in test_getOrderInfo
+    print(response.text)
+AttributeError: 'HttpResponsePermanentRedirect' object has no attribute 'text'
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

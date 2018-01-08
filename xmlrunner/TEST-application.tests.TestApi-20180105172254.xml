@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="application.tests.TestApi-20180105172254" skipped="0" tests="5" time="1.793">
+	<testcase classname="application.tests.TestApi" name="test_orderRequest" time="1.412"/>
+	<testcase classname="application.tests.TestApi" name="test_serializerError" time="0.031"/>
+	<testcase classname="application.tests.TestApi" name="test_setApiKey" time="0.003"/>
+	<testcase classname="application.tests.TestApi" name="test_worldpayError" time="0.346"/>
+	<testcase classname="application.tests.TestApi" name="test_getORderInfo" time="0.001">
+		<error message="name 'header' is not defined" type="NameError">
+<![CDATA[Traceback (most recent call last):
+  File "C:\Users\stylesm\Desktop\test\OFS-MORE-Beta-Secured\source\payment_gateway\application\tests.py", line 76, in test_getORderInfo
+    response = self.client.put('/payment-gateway/api/v1/payments/get/'+id , 'application/json' , header=header)
+NameError: name 'header' is not defined
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
