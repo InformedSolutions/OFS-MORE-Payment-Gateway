@@ -6,6 +6,7 @@ from django.test import Client
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
+import requests
 
 
 class TestApi(unittest.TestCase):
@@ -26,8 +27,8 @@ class TestApi(unittest.TestCase):
   "orderDescription": "Childminder Registration Fee"
 }
         response = self.client.post('/payment-gateway/api/v1/payments/card/' , json.dumps(input), 'application/json', header=header)
-        self.assertEqual(response.status_code, 200)
-    def test_badOrderRequest(self):
+        self.assertEqual(response.status_code, 201)
+    def test_worldpayError(self):
         #Test worldpay error
         self.client = Client()
         header = {'content-type': 'application/json', 'Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
@@ -45,7 +46,7 @@ class TestApi(unittest.TestCase):
         response = self.client.post('/payment-gateway/api/v1/payments/card/' , json.dumps(input), 'application/json', header=header)
         self.assertEqual(response.status_code, 400)
         
-    def test_badOrderRequest2(self):
+    def test_serializerError(self):
         #Test serializer error, missing field
         self.client = Client()
         header = {'content-type': 'application/json', 'Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
@@ -70,3 +71,15 @@ class TestApi(unittest.TestCase):
         }
         response = self.client.put('/payment-gateway/api/v1/payments/api-key/' , json.dumps(input), 'application/json' , header=header)
         self.assertEqual(response.status_code, 200)
+    def test_getOrderInfo(self):
+        #test get order info- note you will have to update the id if you change the api key
+        id="161dbaa0-a025-42fb-9e0d-c4597ac1c6b3"
+        header = {'content-type': 'application/json','Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
+        response = requests.get("https://api.worldpay.com/v1/orders/" +id +'?testMode=100',  headers=header)
+        self.assertEqual(response.status_code, 200)
+    def test_getOrderInfoError(self):
+        #test bad request 
+        id="161dbaa0-a025-42fb-9e0d-c4597ac1c6b1"
+        header = {'content-type': 'application/json','Authorization':'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
+        response = requests.get("https://api.worldpay.com/v1/orders/" +id +'?testMode=100',  headers=header)
+        self.assertEqual(response.status_code, 404)

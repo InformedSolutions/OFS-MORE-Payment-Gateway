@@ -9,4 +9,4 @@ class OrderSerializer(serializers.ModelSerializer):
 class APISerializer(serializers.ModelSerializer):
     class Meta:
         model = Key
-        fields = ('apiKey', 'name')
+        fields = ('apiKey',)
