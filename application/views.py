@@ -65,7 +65,7 @@ def change_api_key(request):
             #API key set
             global apiKey
             apiKey = request.data['apiKey']
-            return JsonResponse({"message":"Api key has been updated, please make a test payment to validate the key"}, status=200)
+            return JsonResponse({"message":"Api key successfully updated"}, status=200)
         err = formatError(serializer.errors)
         log.error("Django serialization error: " +err[0] + err[1])
         return JsonResponse({"message": err[0] + err[1], "error":"Bad Request",}, status=status.HTTP_400_BAD_REQUEST)
