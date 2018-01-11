@@ -120,7 +120,7 @@
           "configuration"
         ],
         "summary": "Sets the (payment provider issued) API key used by this service",
-        "operationId": "apiKey",
+        "operationId": "api_key",
         "consumes": [
           "application/json"
         ],
@@ -159,25 +159,25 @@
     "MakeCardPaymentRequest": {
       "type": "object",
       "required": [
-        "cardHolderName",
-        "cardNumber",
+        "card_holder_name",
+        "card_number",
         "cvc",
-        "expiryMonth",
-        "expiryYear",
-        "currencyCode",
-        "customerOrderCode",
-        "orderDescription"
+        "expiry_month",
+        "expiry_year",
+        "currency_code",
+        "customer_order_code",
+        "order_description"
       ],
       "properties": {
         "amount": {
           "type": "integer",
           "example": 50000
         },
-        "cardHolderName": {
+        "card_holder_name": {
           "type": "string",
           "example": "Mr Example Cardholder"
         },
-        "cardNumber": {
+        "card_number": {
           "type": "string",
           "example": 5454545454545454
         },
@@ -185,23 +185,23 @@
           "type": "string",
           "example": 352
         },
-        "expiryMonth": {
+        "expiry_month": {
           "type": "integer",
           "example": 6
         },
-        "expiryYear": {
+        "expiry_year": {
           "type": "integer",
           "example": 2018
         },
-        "currencyCode": {
+        "currency_code": {
           "type": "string",
           "example": "GBP"
         },
-        "customerOrderCode": {
+        "customer_order_code": {
           "type": "string",
           "example": "OFS-MORE-162738"
         },
-        "orderDescription": {
+        "order_description": {
           "type": "string",
           "example": "Childminder Registration Fee"
         }
@@ -517,10 +517,10 @@
     "UpdateApiKeyRequest": {
       "type": "object",
       "required": [
-        "apiKey"
+        "api_key"
       ],
       "properties": {
-        "apiKey": {
+        "api_key": {
           "type": "string",
           "example": "T_S_936c0508-5fae-4cb3-a631-24320e8ba123"
         }

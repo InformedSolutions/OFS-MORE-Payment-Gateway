@@ -33,7 +33,7 @@ def get_payment(request, id):
             try:
                 status = out['httpStatusCode']
                 return JsonResponse({"message": out}, status=status)
-            except Exception as ex:
+            except Exception:
                 return JsonResponse({"message": out}, status=200)
     except Exception as ex:
         exception_data = traceback.format_exc().splitlines()
@@ -67,7 +67,7 @@ def change_api_key(request):
         if serializer.is_valid():
             # API key set
             global api_key
-            api_key = request.data['apiKey']
+            api_key = request.data['api_key']
             return JsonResponse({"message": "Api key successfully updated"}, status=200)
         err = format_error(serializer.errors)
         log.error("Django serialization error: " + err[0] + err[1])
@@ -83,17 +83,17 @@ def order_request(data):
     # this is just setting the post request for creating the worldpay order
     payload = {
         "paymentMethod": {
-            "name": data['cardHolderName'],
-            "expiryMonth": data['expiryMonth'],
-            "expiryYear": data['expiryYear'],
-            "cardNumber": data['cardNumber'],
+            "name": data['card_holder_name'],
+            "expiryMonth": data['expiry_month'],
+            "expiryYear": data['expiry_year'],
+            "cardNumber": data['card_number'],
             "type": "Card",
             "cvc": data['cvc']
         },
         "amount": data['amount'],
-        "currencyCode": data['currencyCode'],
-        "orderDescription": data['orderDescription'],
-        "customerOrderCode": data['customerOrderCode']
+        "currencyCode": data['currency_code'],
+        "orderDescription": data['order_description'],
+        "customerOrderCode": data['customer_order_code']
     }
     headers = {"content-type": "application/json", "Authorization": api_key}
     response = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
