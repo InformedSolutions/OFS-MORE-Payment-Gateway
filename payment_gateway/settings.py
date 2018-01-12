@@ -103,6 +103,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+URL_PREFIX = '/payment-gateway'
+
 STATIC_URL = '/payment-gateway/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
