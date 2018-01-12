@@ -1,3 +1,13 @@
 xmlrunner/
 logs/
+application/migrations/
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+db.sqlite3
+
 .idea/
+.settings/
