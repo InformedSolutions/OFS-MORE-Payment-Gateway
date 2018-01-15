@@ -29,12 +29,13 @@ def get_payment(request, id):
             # Remove testMode when you want to go live
             header = {'content-type': 'application/json', 'Authorization': api_key}
             response = requests.get("https://api.worldpay.com/v1/orders/" + id + '?testMode=100', headers=header)
-            out = json.loads(response.text)
+            returned_json = json.loads(response.text)
+            del returned_json['token']
             try:
-                status = out['httpStatusCode']
-                return JsonResponse({"message": out}, status=status)
+                status = returned_json['httpStatusCode']
+                return JsonResponse({"message": returned_json}, status=status)
             except Exception:
-                return JsonResponse({"message": out}, status=200)
+                return JsonResponse({"message": returned_json}, status=200)
     except Exception as ex:
         exception_data = traceback.format_exc().splitlines()
         exception_array = [exception_data[-3:]]
