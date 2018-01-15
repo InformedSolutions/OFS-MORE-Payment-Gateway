@@ -93,6 +93,18 @@
             "schema": {
               "$ref": "#/definitions/PaypalPaymentResponse"
             }
+          },
+          "400": {
+            "description": "Error Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -621,10 +633,14 @@
     "ErrorResponse": {
       "type": "object",
       "required": [
+        "error",
         "message"
       ],
       "properties": {
         "message": {
+          "type": "string"
+        },
+        "error": {
           "type": "string"
         }
       }

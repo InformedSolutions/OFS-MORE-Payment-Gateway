@@ -1,14 +1,22 @@
+"""
+OFS-MORE-CCN3: Apply to be a Childminder Beta
+-- urls.py --
+
+@author: Informed Solutions
+"""
+
 import re
-from application.views import place_order, paypal_order_request, change_api_key, get_payment
+from application.views import make_card_payment, make_paypal_payment, change_api_key, get_payment
 from django.conf.urls import url
 
 from django.conf import settings
 
 urlpatterns = [
     # See swagger documentation, there are three RESTful URL's
-    url(r'^api/v1/payments/card/$', place_order),
-    url(r'^api/v1/payments/paypal/$', paypal_order_request),
+    url(r'^api/v1/payments/card/$', make_card_payment),
+    url(r'^api/v1/payments/paypal/$', make_paypal_payment),
     url(r'^api/v1/payments/api-key/$', change_api_key),
+
     # Below regex pulls out id to be used in request as id, see gat_payment parameter
     url(r'^api/v1/payments/(?P<id>[\w-]+)/$', get_payment),
 ]
