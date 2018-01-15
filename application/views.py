@@ -30,7 +30,11 @@ def get_payment(request, id):
             header = {'content-type': 'application/json', 'Authorization': api_key}
             response = requests.get("https://api.worldpay.com/v1/orders/" + id + '?testMode=100', headers=header)
             returned_json = json.loads(response.text)
+
+            # Pruning fields we do not need
             del returned_json['token']
+            del returned_json['environment']
+
             try:
                 status = returned_json['httpStatusCode']
                 return JsonResponse({"message": returned_json}, status=status)
