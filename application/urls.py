@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^api/v1/payments/paypal/$', paypal_order_request),
     url(r'^api/v1/payments/api-key/$', change_api_key),
     # Below regex pulls out id to be used in request as id, see gat_payment parameter
-    url(r'^api/v1/payments/(?P<id>[\w-]+)/$', get_payment)
+    url(r'^api/v1/payments/(?P<payment_id>[\w-]+)/$', get_payment)
 ]
 
 if settings.URL_PREFIX:
