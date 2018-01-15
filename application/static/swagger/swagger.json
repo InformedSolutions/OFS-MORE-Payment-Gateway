@@ -23,7 +23,7 @@
           "payments"
         ],
         "summary": "Requests a card payment be taken",
-        "operationId": "createPayment",
+        "operationId": "createCardPayment",
         "consumes": [
           "application/json"
         ],
@@ -37,7 +37,7 @@
             "description": "Card payment request",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/MakeCardPaymentRequest"
+              "$ref": "#/definitions/CardPaymentRequest"
             }
           }
         ],
@@ -58,6 +58,40 @@
             "description": "Internal Server error",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/payments/paypal/": {
+      "post": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Requests a payment be made via PayPal",
+        "operationId": "createPaypalPayment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "MakePaypalPaymentRequest",
+            "description": "Paypal payment request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PaypalPaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Paypal payment response",
+            "schema": {
+              "$ref": "#/definitions/PaypalPaymentResponse"
             }
           }
         }
@@ -120,7 +154,7 @@
           "configuration"
         ],
         "summary": "Sets the (payment provider issued) API key used by this service",
-        "operationId": "api_key",
+        "operationId": "apiKey",
         "consumes": [
           "application/json"
         ],
@@ -156,28 +190,28 @@
     }
   },
   "definitions": {
-    "MakeCardPaymentRequest": {
+    "CardPaymentRequest": {
       "type": "object",
       "required": [
-        "card_holder_name",
-        "card_number",
+        "cardHolderName",
+        "cardNumber",
         "cvc",
-        "expiry_month",
-        "expiry_year",
-        "currency_code",
-        "customer_order_code",
-        "order_description"
+        "expiryMonth",
+        "expiryYear",
+        "currencyCode",
+        "customerOrderCode",
+        "orderDescription"
       ],
       "properties": {
         "amount": {
           "type": "integer",
           "example": 50000
         },
-        "card_holder_name": {
+        "cardHolderName": {
           "type": "string",
           "example": "Mr Example Cardholder"
         },
-        "card_number": {
+        "cardNumber": {
           "type": "string",
           "example": 5454545454545454
         },
@@ -185,51 +219,106 @@
           "type": "string",
           "example": 352
         },
-        "expiry_month": {
+        "expiryMonth": {
           "type": "integer",
           "example": 6
         },
-        "expiry_year": {
+        "expiryYear": {
           "type": "integer",
           "example": 2018
         },
-        "currency_code": {
+        "currencyCode": {
           "type": "string",
           "example": "GBP"
         },
-        "customer_order_code": {
+        "customerOrderCode": {
           "type": "string",
-          "example": "OFS-MORE-162738"
+          "example": "5d601dc2-d0c6-494f-8690-cc727be9bcda"
         },
-        "order_description": {
+        "orderDescription": {
           "type": "string",
           "example": "Childminder Registration Fee"
         }
       }
     },
-    "PaymentCreationResponse": {
+    "PaypalPaymentRequest": {
       "type": "object",
       "required": [
-        "paymentProviderOrderId"
+        "shopperCountryCode",
+        "amount",
+        "currencyCode",
+        "customerOrderCode",
+        "orderDescription",
+        "successUrl",
+        "pendingUrl",
+        "failureUrl",
+        "cancellationUrl"
       ],
       "properties": {
-        "paymentProviderOrderId": {
+        "shopperCountryCode": {
           "type": "string",
-          "format": "uuid",
-          "example": "963e2f68-3d09-49e4-92e4-fd3869cc45fc"
+          "example": "GB"
+        },
+        "amount": {
+          "type": "integer",
+          "example": 50000
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "GBP"
+        },
+        "customerOrderCode": {
+          "type": "string",
+          "example": "OFS-MORE-162738"
+        },
+        "orderDescription": {
+          "type": "string",
+          "example": "Childminder Registration Fee"
+        },
+        "successUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-success"
+        },
+        "pendingUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-pending"
+        },
+        "failureUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-failed"
+        },
+        "cancellationUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-cancel"
         }
       }
     },
-    "GetPaymentRequest": {
+    "PaypalPaymentResponse": {
       "type": "object",
-      "required": [
-        "paymentProviderOrderId"
-      ],
       "properties": {
-        "paymentProviderOrderId": {
+        "amount": {
           "type": "string",
-          "format": "uuid",
-          "example": "963e2f68-3d09-49e4-92e4-fd3869cc45fc"
+          "example": 50000
+        },
+        "customerOrderCode": {
+          "type": "string",
+          "example": "5d601dc2-d0c6-494f-8690-cc727be9bcda"
+        },
+        "orderCode": {
+          "type": "string",
+          "example": "a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35"
+        },
+        "orderDescription": {
+          "type": "string",
+          "example": "Order description"
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "GBP"
+        },
+        "redirectUrl": {
+          "type": "string",
+          "example": "https://online.worldpay.com/simulators/apm/?orderCode=a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35&merchantId=389880a0-84e6-4ab7-957d-d4d8d011ba42"
         }
       }
     },
@@ -245,10 +334,6 @@
             }
           }
         },
-        "token": {
-          "type": "string",
-          "example": "TEST_SU_494d4873-c3d7-4dc6-b012-9925072195a9"
-        },
         "amount": {
           "type": "string",
           "example": 50000
@@ -259,15 +344,11 @@
         },
         "customerOrderCode": {
           "type": "string",
-          "example": "TEST-CODE"
+          "example": "5d601dc2-d0c6-494f-8690-cc727be9bcda"
         },
         "orderCode": {
           "type": "string",
           "example": "a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35"
-        },
-        "environment": {
-          "type": "string",
-          "example": "TEST"
         },
         "orderDescription": {
           "type": "string",
@@ -517,10 +598,10 @@
     "UpdateApiKeyRequest": {
       "type": "object",
       "required": [
-        "api_key"
+        "apiKey"
       ],
       "properties": {
-        "api_key": {
+        "apiKey": {
           "type": "string",
           "example": "T_S_936c0508-5fae-4cb3-a631-24320e8ba123"
         }
