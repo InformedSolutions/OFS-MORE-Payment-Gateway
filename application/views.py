@@ -18,16 +18,18 @@ api_key = settings.WORLDPAY_API_KEY
 
 
 @api_view(['GET', 'POST', 'PUT'])
-def get_payment(payment_id):
+def get_payment(request, id):
     try:
             # Remove testMode when you want to go live
             header = {'content-type': 'application/json', 'Authorization': api_key}
-            response = requests.get("https://api.worldpay.com/v1/orders/" + payment_id + '?testMode=100', headers=header)
+            response = requests.get("https://api.worldpay.com/v1/orders/" + id + '?testMode=100', headers=header)
+            print(response)
             returned_json = json.loads(response.text)
 
             # Pruning fields we do not need
-            del returned_json['token']
-            del returned_json['environment']
+            if response.status_code == 200:
+                del returned_json['token']
+                del returned_json['environment']
 
             try:
                 status = returned_json['httpStatusCode']
@@ -108,8 +110,8 @@ def paypal_order_request(request):
     data = request.data
     payload = {
         "paymentMethod":{
-            "type":"APM",
-            "apmName":"paypal",
+            "type": "APM",
+            "apmName": "paypal",
             "shopperCountryCode": data["shopperCountryCode"]
         },
         "amount": data["amount"],
@@ -123,10 +125,14 @@ def paypal_order_request(request):
     }
     headers = {"content-type": "application/json", "Authorization": api_key}
     response = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
+    returned_text = response.text
+
+    returned_json = json.loads(returned_text)
+
     if response.status_code == 200:
-        return JsonResponse(json.loads(response.text), status=201)
+        return JsonResponse(returned_json, status=201)
     else:
-        return JsonResponse(json.loads(response.text), status=response.status_code)
+        return JsonResponse(returned_json, status=response.status_code)
 
 def format_error(ex):
     # Formatting default Django error messages
