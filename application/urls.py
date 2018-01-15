@@ -1,12 +1,16 @@
 import re
-from application.views import place_order, get_payment, change_api_key
+from application.views import place_order, paypal_order_request, change_api_key, get_payment
 from django.conf.urls import url
 
 from django.conf import settings
 
 urlpatterns = [
     # See swagger documentation, there are three RESTful URL's
-    url(r'^api/v1/payments/(?P<id>[\w-]+)/$', get_payment),
+    url(r'^api/v1/payments/card/$', place_order),
+    url(r'^api/v1/payments/paypal/$', paypal_order_request),
+    url(r'^api/v1/payments/api-key/$', change_api_key),
+    # Below regex pulls out id to be used in request as id, see gat_payment parameter
+    url(r'^api/v1/payments/(?P<id>[\w-]+)/$', get_payment)
 ]
 
 if settings.URL_PREFIX:

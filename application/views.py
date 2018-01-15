@@ -20,12 +20,6 @@ api_key = settings.WORLDPAY_API_KEY
 @api_view(['GET', 'POST', 'PUT'])
 def get_payment(request, id):
     try:
-        if "card" in id:
-            return place_order(request)
-        elif "api-key" in id:
-
-            return change_api_key(request)
-        else:
             # Remove testMode when you want to go live
             header = {'content-type': 'application/json', 'Authorization': api_key}
             response = requests.get("https://api.worldpay.com/v1/orders/" + id + '?testMode=100', headers=header)
@@ -107,6 +101,9 @@ def order_request(data):
     else:
         return JsonResponse(json.loads(response.text), status=response.status_code)
 
+def paypal_order_request(request):
+
+    return True
 
 def format_error(ex):
     # Formatting default Django error messages
