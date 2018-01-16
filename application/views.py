@@ -26,17 +26,17 @@ api_key = settings.WORLDPAY_API_KEY
 
 
 @api_view(['GET'])
-def get_payment(request, id):
+def get_payment(request, payment_id):
     """
     Function for retrieving a previously placed order
-    :param request: a json request issued over http protocols
-    :param id: the (WorldPay) identifier of the previously issued payment
+    :param request: a json request issued over http protocols, this must exist (like a class' self method)
+    :param payment_id: the (WorldPay) identifier of the previously issued payment
     :return: a json representation of a previously lodged payment
     """
     try:
         # Remove testMode when you want to go live
         header = {'content-type': 'application/json', 'Authorization': api_key}
-        response = requests.get("https://api.worldpay.com/v1/orders/" + id + '?testMode=100', headers=header)
+        response = requests.get("https://api.worldpay.com/v1/orders/" + payment_id + '?testMode=100', headers=header)
         print(response)
         returned_json = json.loads(response.text)
 
@@ -46,9 +46,9 @@ def get_payment(request, id):
             del returned_json['environment']
 
         try:
-            status = returned_json['httpStatusCode']
-            return JsonResponse({"message": returned_json}, status=status)
-        except Exception:
+            status_code = returned_json['httpStatusCode']
+            return JsonResponse({"message": returned_json}, status=status_code)
+        except KeyError:
             return JsonResponse({"message": returned_json}, status=200)
     except Exception as ex:
         exception_data = traceback.format_exc().splitlines()
@@ -84,7 +84,8 @@ def make_paypal_payment(request):
     """
     Function for making a new Paypal payment via the WorldPay payment processing platform
     :param request: a json object inclusive of details for a paypal payment to be taken
-    :return: a response inclusive of any URLs that a user should be redirected to (i.e. WorldPay paypal UIs) for making a Paypal payment
+    :return: a response inclusive of any URLs that a user should be redirected to (i.e. WorldPay paypal UIs) for making
+    a Paypal payment
     """
     mapped_json_request = Utilities.convert_json_to_python_object(request.data)
     try:
@@ -130,7 +131,8 @@ def change_api_key(request):
 def __create_worldpay_card_order_request(card_payment_request):
     """
     Helper method for creating a request object that can be consumed by the Worldpay API to take a card payment
-    :param card_payment_request: a request object sent to the payment gateway API containing information for taking a card payment via Worldpay
+    :param card_payment_request: a request object sent to the payment gateway API containing information for taking a
+    card payment via Worldpay
     :return: a json request that can be consumed by the Worldpay API for making a card payment
     """
     payload = {
@@ -160,7 +162,8 @@ def __create_worldpay_card_order_request(card_payment_request):
 def __create_worldpay_paypal_order_request(paypal_payment_request):
     """
     Helper method for creating a request object that can be consumed by the Worldpay API to take a paypal payment
-    :param paypal_payment_request: a request object sent to the payment gateway API containing information for taking a Paypal payment via Worldpay
+    :param paypal_payment_request: a request object sent to the payment gateway API containing information for taking a
+    Paypal payment via Worldpay
     :return: a json request that can be consumed by the Worldpay API for making a Paypal payment
     """
     payload = {

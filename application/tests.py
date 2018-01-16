@@ -116,7 +116,7 @@ class TestApi(unittest.TestCase):
         :return: a success or fail value to the test runner to be reported on completion (see assert on response code)
         """
         order_id = "161dbaa0-a025-42fb-9e0d-c4597ac1c6b3"
-        header = {'content-type': 'application/json', 'Authorization': 'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'}
+        header = {'content-type': 'application/json', 'Authorization': settings.WORLDPAY_API_KEY}
         response = requests.get("https://api.worldpay.com/v1/orders/" + order_id + '?testMode=100', headers=header)
         self.assertEqual(response.status_code, 200)
 
