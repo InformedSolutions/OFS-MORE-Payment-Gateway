@@ -26,7 +26,7 @@ class Utilities:
         for json_key in json_object:
             python_key = Utilities.__convert(json_key)
             if isinstance(json_object[json_key], dict):
-                out[python_key] = Utilities.convertJSON(json_object[json_key])
+                out[python_key] = Utilities.convert_json_to_python_object(json_object[json_key])
             elif isinstance(json_object[json_key], list):
                 out[python_key] = Utilities.__convert_json_array(json_object[json_key])
             else:
