@@ -6,10 +6,12 @@ OFS-MORE-CCN3: Apply to be a Childminder Beta
 """
 
 import re
-from application.views import make_card_payment, make_paypal_payment, change_api_key, get_payment
-from django.conf.urls import url
 
+from django.conf.urls import url
 from django.conf import settings
+
+from application.views import make_card_payment, make_paypal_payment, change_api_key, get_payment
+
 
 urlpatterns = [
     # See swagger documentation, there are three RESTful URL's
@@ -17,7 +19,7 @@ urlpatterns = [
     url(r'^api/v1/payments/paypal/$', make_paypal_payment),
     url(r'^api/v1/payments/api-key/$', change_api_key),
 
-    # Below regex pulls out id to be used in request as id, see gat_payment parameter
+    # Below regex pulls out id to be used in request as id, see get_payment parameter
     url(r'^api/v1/payments/(?P<id>[\w-]+)/$', get_payment),
 ]
 

@@ -9,6 +9,10 @@ from django.db import models
 
 
 class CardPaymentRequest(models.Model):
+    """
+    Model used for serialization of Card Payment JSON objects, validates each input against a model attribute type
+    See make_card payment method in application/views.py for an example of implementation
+    """
     # Card payment data validation rules
     amount = models.DecimalField(max_digits=10, decimal_places=0, blank=False)
     card_holder_name = models.CharField(max_length=100, blank=False)
@@ -22,6 +26,10 @@ class CardPaymentRequest(models.Model):
 
 
 class PaypalPaymentRequest(models.Model):
+    """
+    Model used for serialization of Paypal Payment JSON objects, validates each input against a model attribute type
+    See make_paypal_payment method in application/views.py for an example of implementation
+    """
     # Paypal payment data validation rules
     amount = models.DecimalField(max_digits=10, decimal_places=0, blank=False)
     shopper_country_code = models.CharField(max_length=3, blank=False)
@@ -35,6 +43,10 @@ class PaypalPaymentRequest(models.Model):
 
 
 class ApiKey(models.Model):
+    """
+    Model used for serialization of API key JSON object, ensures legitimately sized input
+    See change_api_key method in application/views.py for an example of implementation
+    """
     # API key validation rules
     # Name is a placeholder as there needs to be more than one entry to execute without error
     api_key = models.CharField(max_length=100, blank=False)
