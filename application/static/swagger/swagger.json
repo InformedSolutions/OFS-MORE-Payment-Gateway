@@ -45,7 +45,7 @@
           "201": {
             "description": "Payment successfully taken",
             "schema": {
-              "$ref": "#/definitions/OrderResponse"
+              "$ref": "#/definitions/CardPaymentResponse"
             }
           },
           "400": {
@@ -253,88 +253,7 @@
         }
       }
     },
-    "PaypalPaymentRequest": {
-      "type": "object",
-      "required": [
-        "shopperCountryCode",
-        "amount",
-        "currencyCode",
-        "customerOrderCode",
-        "orderDescription",
-        "successUrl",
-        "pendingUrl",
-        "failureUrl",
-        "cancellationUrl"
-      ],
-      "properties": {
-        "shopperCountryCode": {
-          "type": "string",
-          "example": "GB"
-        },
-        "amount": {
-          "type": "integer",
-          "example": 50000
-        },
-        "currencyCode": {
-          "type": "string",
-          "example": "GBP"
-        },
-        "customerOrderCode": {
-          "type": "string",
-          "example": "OFS-MORE-162738"
-        },
-        "orderDescription": {
-          "type": "string",
-          "example": "Childminder Registration Fee"
-        },
-        "successUrl": {
-          "type": "string",
-          "example": "https://ofsted.gov.uk/payment-success"
-        },
-        "pendingUrl": {
-          "type": "string",
-          "example": "https://ofsted.gov.uk/payment-pending"
-        },
-        "failureUrl": {
-          "type": "string",
-          "example": "https://ofsted.gov.uk/payment-failed"
-        },
-        "cancellationUrl": {
-          "type": "string",
-          "example": "https://ofsted.gov.uk/payment-cancel"
-        }
-      }
-    },
-    "PaypalPaymentResponse": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "string",
-          "example": 50000
-        },
-        "customerOrderCode": {
-          "type": "string",
-          "example": "5d601dc2-d0c6-494f-8690-cc727be9bcda"
-        },
-        "orderCode": {
-          "type": "string",
-          "example": "a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35"
-        },
-        "orderDescription": {
-          "type": "string",
-          "example": "Order description"
-        },
-        "currencyCode": {
-          "type": "string",
-          "example": "GBP"
-        },
-        "redirectUrl": {
-          "type": "string",
-          "example": "https://online.worldpay.com/simulators/apm/?orderCode=a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35&merchantId=389880a0-84e6-4ab7-957d-d4d8d011ba42"
-        }
-      }
-    },
-    "OrderResponse": {
+    "CardPaymentResponse": {
       "type": "object",
       "properties": {
         "riskScore": {
@@ -443,6 +362,87 @@
               "example": 2
             }
           }
+        }
+      }
+    },
+    "PaypalPaymentRequest": {
+      "type": "object",
+      "required": [
+        "shopperCountryCode",
+        "amount",
+        "currencyCode",
+        "customerOrderCode",
+        "orderDescription",
+        "successUrl",
+        "pendingUrl",
+        "failureUrl",
+        "cancellationUrl"
+      ],
+      "properties": {
+        "shopperCountryCode": {
+          "type": "string",
+          "example": "GB"
+        },
+        "amount": {
+          "type": "integer",
+          "example": 50000
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "GBP"
+        },
+        "customerOrderCode": {
+          "type": "string",
+          "example": "OFS-MORE-162738"
+        },
+        "orderDescription": {
+          "type": "string",
+          "example": "Childminder Registration Fee"
+        },
+        "successUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-success"
+        },
+        "pendingUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-pending"
+        },
+        "failureUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-failed"
+        },
+        "cancellationUrl": {
+          "type": "string",
+          "example": "https://ofsted.gov.uk/payment-cancel"
+        }
+      }
+    },
+    "PaypalPaymentResponse": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "example": 50000
+        },
+        "customerOrderCode": {
+          "type": "string",
+          "example": "5d601dc2-d0c6-494f-8690-cc727be9bcda"
+        },
+        "orderCode": {
+          "type": "string",
+          "example": "a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35"
+        },
+        "orderDescription": {
+          "type": "string",
+          "example": "Order description"
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "GBP"
+        },
+        "redirectUrl": {
+          "type": "string",
+          "example": "https://online.worldpay.com/simulators/apm/?orderCode=a4c34c3c-cf1c-4404-a8fe-8b2d09b18e35&merchantId=389880a0-84e6-4ab7-957d-d4d8d011ba42"
         }
       }
     },
