@@ -1,6 +1,5 @@
 xmlrunner/
 logs/
-application/migrations/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
