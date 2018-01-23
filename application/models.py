@@ -36,10 +36,10 @@ class PaypalPaymentRequest(models.Model):
     currency_code = models.CharField(max_length=3, blank=False)
     customer_order_code = models.CharField(max_length=100, blank=False)
     order_description = models.CharField(max_length=100, blank=False)
-    success_url = models.CharField(max_length=100, blank=False)
-    pending_url = models.CharField(max_length=100, blank=False)
-    failure_url = models.CharField(max_length=100, blank=False)
-    cancellation_url = models.CharField(max_length=100, blank=False)
+    success_url = models.CharField(max_length=200, blank=False)
+    pending_url = models.CharField(max_length=200, blank=False)
+    failure_url = models.CharField(max_length=200, blank=False)
+    cancellation_url = models.CharField(max_length=200, blank=False)
 
 
 class ApiKey(models.Model):
