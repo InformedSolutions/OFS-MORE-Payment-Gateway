@@ -10,6 +10,8 @@ WORLDPAY_API_KEY = 'T_S_affb6e01-fd4e-42e4-bed6-5cc45e38ed57'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+TEST_MODE = True
+
 ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
