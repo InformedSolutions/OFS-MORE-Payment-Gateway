@@ -36,11 +36,13 @@ def get_payment(request, payment_id):
     try:
         # Remove testMode when you want to go live
         header = {'content-type': 'application/json', 'Authorization': api_key}
-        if settings.TEST_MODE:
-            test_value = 100
-        else:
-            test_value = 0
-        response = requests.get("https://api.worldpay.com/v1/orders/" + payment_id + '?testMode=' +test_value, headers=header)
+        test_value = 0
+        if hasattr(settings, 'TEST_MODE'):
+            if settings.TEST_MODE:
+                test_value = 100
+
+        response = requests.get("https://api.worldpay.com/v1/orders/" + payment_id + '?testMode=' + test_value,
+                                headers=header)
         print(response)
         returned_json = json.loads(response.text)
 
