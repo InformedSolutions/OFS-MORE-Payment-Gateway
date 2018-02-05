@@ -19,6 +19,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [],
+	'DEFAULT_AUTHENTICATION_CLASSES': [],
     # Parser classes priority-wise for Swagger
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.FormParser',
