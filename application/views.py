@@ -41,9 +41,8 @@ def get_payment(request, payment_id):
             if settings.TEST_MODE:
                 test_value = 100
 
-        response = requests.get("https://api.worldpay.com/v1/orders/" + payment_id + '?testMode=' + str(test_value),
+        response = requests.get(settings.WORLDPAY_URL + payment_id + '?testMode=' + str(test_value),
                                 headers=header)
-        print(response)
         returned_json = json.loads(response.text)
 
         # Pruning fields we do not need
@@ -157,7 +156,7 @@ def __create_worldpay_card_order_request(card_payment_request):
     }
 
     headers = {"content-type": "application/json", "Authorization": api_key}
-    response = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
+    response = requests.post(settings.WORLDPAY_URL, data=json.dumps(payload), headers=headers)
 
     if response.status_code == 200:
         return JsonResponse(json.loads(response.text), status=201)
@@ -189,7 +188,7 @@ def __create_worldpay_paypal_order_request(paypal_payment_request):
     }
 
     headers = {"content-type": "application/json", "Authorization": api_key}
-    response = requests.post("https://api.worldpay.com/v1/orders", data=json.dumps(payload), headers=headers)
+    response = requests.post(settings.WORLDPAY_URL, data=json.dumps(payload), headers=headers)
 
     if response.status_code == 200:
         return JsonResponse(json.loads(response.text), status=201)
