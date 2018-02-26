@@ -1,6 +1,6 @@
 Django==1.11.10
 djangorestframework==3.5.3
-psycopg2
+psycopg2-binary
 coreapi==2.3.3
 PyYAML
 openapi-codec
