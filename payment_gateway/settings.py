@@ -18,7 +18,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [],
-	'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
     # Parser classes priority-wise for Swagger
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.FormParser',
@@ -32,7 +32,6 @@ REST_FRAMEWORK = {
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
 ]
 
 ROOT_URLCONF = 'payment_gateway.urls'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -64,7 +64,7 @@ WSGI_APPLICATION = 'payment_gateway.wsgi.application'
 # No database is needed for the Payment Gateway
 DATABASES = {}
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'UTC'
 
@@ -82,36 +82,6 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Output all logs to /logs directory
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'console': {
-#             # exact format is not important, this is the minimum information
-#             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-#         },
-#     },
-#     'handlers': {
-#         'django.server': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'maxBytes': 1 * 1024 * 1024,
-#             'filename': 'logs/output.log',
-#             'formatter': 'console',
-#             'maxBytes': 1 * 1024 * 1024,
-#             'backupCount': '30'
-#         },
-#     },
-#     'loggers': {
-#         'django.server': {
-#             'handlers': ['django.server'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
 
 # Test outputs
 TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
