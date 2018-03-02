@@ -7,7 +7,7 @@ OFS-MORE-CCN3: Apply to be a Childminder Beta
 
 import re
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf import settings
 
 from application.views import make_card_payment, make_paypal_payment, change_api_key, get_payment
@@ -29,3 +29,9 @@ if settings.URL_PREFIX:
         pat.regex = re.compile(r"^%s/%s" % (settings.URL_PREFIX[1:], pat.regex.pattern[1:]))
         prefixed_url_pattern.append(pat)
     urlpatterns = prefixed_url_pattern
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
