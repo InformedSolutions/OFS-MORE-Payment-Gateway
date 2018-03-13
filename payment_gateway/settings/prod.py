@@ -1,6 +1,6 @@
 from .base import *
 
-WORLDPAY_API_KEY = 'T_S_af676e01-fd4e-42e4-bed6-5cc45e38ed57'
+WORLDPAY_API_KEY = os.environ.get('WORLDPAY_API_KEY')
 
 DEBUG = False
 
