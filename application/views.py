@@ -5,6 +5,7 @@ OFS-MORE-CCN3: Apply to be a Childminder Beta
 @author: Informed Solutions
 """
 
+import uuid
 import json
 import logging
 import requests
@@ -41,14 +42,18 @@ def get_payment(request, payment_id):
             if settings.TEST_MODE:
                 test_value = 100
 
-        response = requests.get('https://api.worldpay.com/v1/orders/' + payment_id + '?testMode=' + str(test_value),
-                                headers=header)
-        returned_json = json.loads(response.text)
+        if not hasattr(settings, 'DEV_MODE'):
+            response = requests.get('https://api.worldpay.com/v1/orders/' + payment_id + '?testMode=' + str(test_value),
+                                    headers=header)
+            returned_json = json.loads(response.text)
 
-        # Pruning fields we do not need
-        if response.status_code == 200:
-            del returned_json['token']
-            del returned_json['environment']
+            # Pruning fields we do not need
+            if response.status_code == 200:
+                del returned_json['token']
+                del returned_json['environment']
+        else:
+            returned_json = dict()
+            returned_json['httpStatusCode'] = 200
 
         try:
             status_code = returned_json['httpStatusCode']
@@ -70,13 +75,25 @@ def make_card_payment(request):
     :return: a success or failure response from the WorldPay payment processing platform
     """
     mapped_json_request = Utilities.convert_json_to_python_object(request.data)
+
     try:
+
         serializer = CardPaymentRequestSerializer(data=mapped_json_request)
+
         if serializer.is_valid():
+
+            # If dev environment mock the answer from worldpay
+            if hasattr(settings, 'DEV_MODE'):
+                if settings.DEV_MODE:
+                    return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
+
             return __create_worldpay_card_order_request(serializer.data)
+
         err = __format_error(serializer.errors)
         log.error("Django serialization error: " + err[0] + err[1])
+
         return JsonResponse({"message": err[0] + err[1], "error": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
     except Exception as ex:
         exception_data = traceback.format_exc().splitlines()
         exception_array = [exception_data[-3:]]

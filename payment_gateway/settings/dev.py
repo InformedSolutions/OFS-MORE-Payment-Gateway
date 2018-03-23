@@ -5,6 +5,7 @@ WORLDPAY_API_KEY = os.environ.get('WORLDPAY_API_KEY')
 DEBUG = True
 
 TEST_MODE = True
+DEV_MODE = True
 
 ALLOWED_HOSTS = ['*']
 PUBLIC_APPLICATION_URL = 'http://localhost:8000/payment-service'
