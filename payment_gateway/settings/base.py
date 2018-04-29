@@ -1,5 +1,11 @@
 import os
 
+WORLDPAY_PAYMENT_ENDPOINT = os.environ.get('WORLDPAY_PAYMENT_ENDPOINT')
+WORLDPAY_XML_USERNAME = os.environ.get('WORLDPAY_XML_USERNAME')
+WORLDPAY_XML_PASSWORD = os.environ.get('WORLDPAY_XML_PASSWORD')
+MERCHANT_CODE = os.environ.get('MERCHANT_CODE')
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

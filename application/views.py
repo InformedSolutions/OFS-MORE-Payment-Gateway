@@ -11,19 +11,28 @@ import logging
 import requests
 import traceback
 
+import xmltodict as xmltodict
 from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 
-from application.serializers import CardPaymentRequestSerializer, PaypalPaymentRequestSerializer, ApiKeySerializer
-from application.utilities import Utilities
+from .serializers import CardPaymentRequestSerializer, PaypalPaymentRequestSerializer, ApiKeySerializer
+from .utilities import Utilities
+from lxml import etree
+
 
 # initiate logging
 log = logging.getLogger('django.server')
 
-# initiate API key
-api_key = settings.WORLDPAY_API_KEY
+# Initiate worldpay endpoint URL
+WORLDPAY_PAYMENT_ENDPOINT = settings.WORLDPAY_PAYMENT_ENDPOINT
+
+# Initiate endpoint credentials
+MERCHANT_CODE = settings.MERCHANT_CODE
+WORLDPAY_XML_USERNAME = settings.WORLDPAY_XML_USERNAME
+WORLDPAY_XML_PASSWORD = settings.WORLDPAY_XML_PASSWORD
+
 
 
 @api_view(['GET'])
@@ -36,7 +45,7 @@ def get_payment(request, payment_id):
     """
     try:
         # Remove testMode when you want to go live
-        header = {'content-type': 'application/json', 'Authorization': api_key}
+        header = {'content-type': 'application/json', 'Authorization': MERCHANT_CODE}
         test_value = 0
         if hasattr(settings, 'TEST_MODE'):
             if settings.TEST_MODE:
@@ -87,7 +96,7 @@ def make_card_payment(request):
                 if settings.DEV_MODE:
                     return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
 
-            return __create_worldpay_card_order_request(serializer.data)
+            return __create_worldpay_card_order_request(mapped_json_request)
 
         err = __format_error(serializer.errors)
         log.error("Django serialization error: " + err[0] + err[1])
@@ -137,8 +146,8 @@ def change_api_key(request):
         serializer = ApiKeySerializer(data=mapped_json_request)
         if serializer.is_valid():
             # API key set
-            global api_key
-            api_key = mapped_json_request['api_key']
+            global MERCHANT_CODE
+            MERCHANT_CODE = mapped_json_request['api_key']
             return JsonResponse({"message": "Api key successfully updated"}, status=200)
         err = __format_error(serializer.errors)
         log.error("Django serialization error: " + err[0] + err[1])
@@ -157,28 +166,67 @@ def __create_worldpay_card_order_request(card_payment_request):
     card payment via Worldpay
     :return: a json request that can be consumed by the Worldpay API for making a card payment
     """
-    payload = {
-        "paymentMethod": {
-            "name": card_payment_request['card_holder_name'],
-            "expiryMonth": card_payment_request['expiry_month'],
-            "expiryYear": card_payment_request['expiry_year'],
-            "cardNumber": card_payment_request['card_number'],
-            "type": "Card",
-            "cvc": card_payment_request['cvc']
-        },
-        "amount": card_payment_request['amount'],
-        "currencyCode": card_payment_request['currency_code'],
-        "orderDescription": card_payment_request['order_description'],
-        "customerOrderCode": card_payment_request['customer_order_code']
-    }
+    payload = build_worldpay_card_payment_xml(card_payment_request)
+    headers = {"content-type": "text/xml"}
+    response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers, auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
+    dictionary = xmltodict.parse(response.text)
 
-    headers = {"content-type": "application/json", "Authorization": api_key}
-    response = requests.post('https://api.worldpay.com/v1/orders/', data=json.dumps(payload), headers=headers)
+    payment_service_result = dictionary.get('paymentService')
+    payment_service_result_reply = payment_service_result.get('reply')
 
-    if response.status_code == 200:
-        return JsonResponse(json.loads(response.text), status=201)
+    if 'error' in payment_service_result_reply:
+        return JsonResponse(
+            {"error": payment_service_result_reply.get('#text')}, status=500
+        )
     else:
-        return JsonResponse(json.loads(response.text), status=response.status_code)
+        return JsonResponse({"orderCode": True}, status=201)
+
+
+def build_worldpay_card_payment_xml(card_payment_request):
+    """
+    Helper method for creating an XML request object for dispatch to the Worldpay API
+    :param card_payment_request: an inbound payment request received by the payment gateway API
+    :return: a structured XML request to be POSTed to Worldpay
+    """
+    payment_service_root = etree.Element('paymentService', version='1.4', merchantCode=str(MERCHANT_CODE))
+    submit = etree.SubElement(payment_service_root, 'submit')
+    order = etree.SubElement(submit, 'order', orderCode=str(card_payment_request['customer_order_code']))
+
+    description = etree.SubElement(order, 'description')
+    description.text = card_payment_request['order_description']
+
+    etree.SubElement(
+        order, 'amount', currencyCode=str(card_payment_request['currency_code']),
+        exponent='2', value=str(card_payment_request['amount'])
+    )
+
+    payment_details_element = etree.SubElement(order, 'paymentDetails')
+    card_ssl = etree.SubElement(payment_details_element, 'CARD-SSL')
+
+    card_number = etree.SubElement(card_ssl, 'cardNumber')
+    card_number.text = str(card_payment_request['card_number'])
+
+    expiry_date = etree.SubElement(card_ssl, 'expiryDate')
+    etree.SubElement(
+        expiry_date, 'date',
+        month=str(card_payment_request['expiry_month']),
+        year=str(card_payment_request['expiry_year'])
+    )
+
+    card_holder = etree.SubElement(card_ssl, 'cardHolderName')
+    card_holder.text = str(card_payment_request['card_holder_name'])
+
+    # Append DTD
+    xml_string = etree.tostring(
+        payment_service_root.getroottree(),
+        xml_declaration=True,
+        encoding='UTF-8',
+        doctype='<!DOCTYPE paymentService PUBLIC "-//Worldpay//DTD Worldpay PaymentService v1//EN" "http://dtd.worldpay.com/paymentService_v1.dtd">'
+    )
+
+    print(xml_string)
+
+    return xml_string
 
 
 def __create_worldpay_paypal_order_request(paypal_payment_request):
@@ -204,7 +252,7 @@ def __create_worldpay_paypal_order_request(paypal_payment_request):
         "cancelUrl": paypal_payment_request["cancellation_url"],
     }
 
-    headers = {"content-type": "application/json", "Authorization": api_key}
+    headers = {"content-type": "application/json", "Authorization": MERCHANT_CODE}
     response = requests.post('https://api.worldpay.com/v1/orders/', data=json.dumps(payload), headers=headers)
 
     if response.status_code == 200:
