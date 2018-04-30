@@ -299,10 +299,6 @@
           "type": "string",
           "example": "https://ofsted.gov.uk/payment-success"
         },
-        "pendingUrl": {
-          "type": "string",
-          "example": "https://ofsted.gov.uk/payment-pending"
-        },
         "failureUrl": {
           "type": "string",
           "example": "https://ofsted.gov.uk/payment-failed"
