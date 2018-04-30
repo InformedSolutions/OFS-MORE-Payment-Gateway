@@ -176,10 +176,17 @@ def __create_worldpay_card_order_request(card_payment_request):
 
     if 'error' in payment_service_result_reply:
         return JsonResponse(
-            {"error": payment_service_result_reply.get('#text')}, status=500
+            {
+                "message": 'Internal Server error',
+                "error": payment_service_result_reply.get('error').get('#text')
+            }, status=500
         )
     else:
-        return JsonResponse({"orderCode": True}, status=201)
+        return JsonResponse(
+            {
+                "customerOrderCode": payment_service_result_reply.get('orderStatus').get('@orderCode')
+            }
+            , status=201)
 
 
 def build_worldpay_card_payment_xml(card_payment_request):
