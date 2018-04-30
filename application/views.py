@@ -4,7 +4,7 @@ OFS-MORE-CCN3: Apply to be a Childminder Beta
 
 @author: Informed Solutions
 """
-
+import datetime
 import uuid
 import json
 import logging
@@ -40,40 +40,55 @@ def get_payment(request, payment_id):
     """
     Function for retrieving a previously placed order
     :param request: a json request issued over http protocols, this must exist (like a class' self method)
-    :param payment_id: the (WorldPay) identifier of the previously issued payment
+    :param payment_id: the order code of the previously issued payment
     :return: a json representation of a previously lodged payment
     """
-    try:
-        # Remove testMode when you want to go live
-        header = {'content-type': 'application/json', 'Authorization': MERCHANT_CODE}
-        test_value = 0
-        if hasattr(settings, 'TEST_MODE'):
-            if settings.TEST_MODE:
-                test_value = 100
+    payload = __build_order_query_request(payment_id)
+    headers = {"content-type": "text/xml"}
+    response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
+                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
 
-        if not hasattr(settings, 'DEV_MODE'):
-            response = requests.get('https://api.worldpay.com/v1/orders/' + payment_id + '?testMode=' + str(test_value),
-                                    headers=header)
-            returned_json = json.loads(response.text)
+    dictionary = xmltodict.parse(response.text)
+    payment_service_result = dictionary.get('paymentService')
+    payment_service_result_reply = payment_service_result.get('reply')
 
-            # Pruning fields we do not need
-            if response.status_code == 200:
-                del returned_json['token']
-                del returned_json['environment']
+    if 'error' in payment_service_result_reply.get('orderStatus'):
+        if payment_service_result_reply.get('orderStatus').get('error').get('@code') == '5':
+            return JsonResponse(
+                {
+                    "message": 'Payment not found',
+                    "error": payment_service_result_reply.get('orderStatus').get('error').get('#text')
+                }, status=404
+            )
         else:
-            returned_json = dict()
-            returned_json['httpStatusCode'] = 200
+            return JsonResponse(
+                {
+                    "message": 'Internal Server error',
+                    "error": payment_service_result_reply.get('orderStatus').get('error').get('#text')
+                }, status=500
+            )
 
-        try:
-            status_code = returned_json['httpStatusCode']
-            return JsonResponse({"message": returned_json}, status=status_code)
-        except KeyError:
-            return JsonResponse({"message": returned_json}, status=200)
-    except Exception as ex:
-        exception_data = traceback.format_exc().splitlines()
-        exception_array = [exception_data[-3:]]
-        log.error(exception_array)
-        return JsonResponse(ex.__dict__, status=500)
+    # If no errors were encountered in retrieving the payment compile payment date
+    payment_date_day = int(payment_service_result_reply.get('orderStatus').get('date').get('@dayOfMonth'))
+    payment_date_month = int(payment_service_result_reply.get('orderStatus').get('date').get('@month'))
+    payment_date_year = int(payment_service_result_reply.get('orderStatus').get('date').get('@year'))
+    payment_date_hour = int(payment_service_result_reply.get('orderStatus').get('date').get('@hour'))
+    payment_date_minute = int(payment_service_result_reply.get('orderStatus').get('date').get('@minute'))
+    payment_date_second = int(payment_service_result_reply.get('orderStatus').get('date').get('@second'))
+
+    payment_date_combined = datetime.datetime(payment_date_year, payment_date_month, payment_date_day,
+                                              payment_date_hour, payment_date_minute, payment_date_second)
+
+    return JsonResponse(
+        {
+            "orderCode": payment_id,
+            "paymentMethod": payment_service_result_reply.get('orderStatus').get('payment').get('paymentMethod'),
+            "creationDate": payment_date_combined.isoformat(),
+            "lastEvent": payment_service_result_reply.get('orderStatus').get('payment').get('lastEvent'),
+            "amount": payment_service_result_reply.get('orderStatus').get('payment').get('amount').get('@value'),
+            "currencyCode": payment_service_result_reply.get('orderStatus').get('payment').get('amount').get('@currencyCode')
+        }, status=200
+    )
 
 
 @api_view(['POST'])
@@ -164,9 +179,8 @@ def __create_worldpay_card_order_request(card_payment_request):
     Helper method for creating a request object that can be consumed by the Worldpay API to take a card payment
     :param card_payment_request: a request object sent to the payment gateway API containing information for taking a
     card payment via Worldpay
-    :return: a json request that can be consumed by the Worldpay API for making a card payment
     """
-    payload = build_worldpay_card_payment_xml(card_payment_request)
+    payload = __build_worldpay_card_payment_xml(card_payment_request)
     headers = {"content-type": "text/xml"}
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers, auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
     dictionary = xmltodict.parse(response.text)
@@ -189,7 +203,7 @@ def __create_worldpay_card_order_request(card_payment_request):
             , status=201)
 
 
-def build_worldpay_card_payment_xml(card_payment_request):
+def __build_worldpay_card_payment_xml(card_payment_request):
     """
     Helper method for creating an XML request object for dispatch to the Worldpay API
     :param card_payment_request: an inbound payment request received by the payment gateway API
@@ -223,7 +237,7 @@ def build_worldpay_card_payment_xml(card_payment_request):
     card_holder = etree.SubElement(card_ssl, 'cardHolderName')
     card_holder.text = str(card_payment_request['card_holder_name'])
 
-    # Append DTD
+    # Append DTD heading to request
     xml_string = etree.tostring(
         payment_service_root.getroottree(),
         xml_declaration=True,
@@ -231,7 +245,25 @@ def build_worldpay_card_payment_xml(card_payment_request):
         doctype='<!DOCTYPE paymentService PUBLIC "-//Worldpay//DTD Worldpay PaymentService v1//EN" "http://dtd.worldpay.com/paymentService_v1.dtd">'
     )
 
-    print(xml_string)
+    return xml_string
+
+
+def __build_order_query_request(payment_id):
+    """
+    Helper method for creating a request object that can be consumed by the Worldpay XML API to get the latest status of an order.
+    :param payment_id the order code for a payment
+    """
+    payment_service_root = etree.Element('paymentService', version='1.4', merchantCode=str(MERCHANT_CODE))
+    inquiry = etree.SubElement(payment_service_root, 'inquiry')
+    etree.SubElement(inquiry, 'orderInquiry', orderCode=str(payment_id))
+
+    # Append DTD heading to request
+    xml_string = etree.tostring(
+        payment_service_root.getroottree(),
+        xml_declaration=True,
+        encoding='UTF-8',
+        doctype='<!DOCTYPE paymentService PUBLIC "-//Worldpay//DTD Worldpay PaymentService v1//EN" "http://dtd.worldpay.com/paymentService_v1.dtd">'
+    )
 
     return xml_string
 
