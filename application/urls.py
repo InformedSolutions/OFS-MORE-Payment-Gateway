@@ -10,13 +10,12 @@ import re
 from django.conf.urls import url, include
 from django.conf import settings
 
-from application.views import make_card_payment, make_paypal_payment, change_api_key, get_payment
+from .views import make_card_payment, change_api_key, get_payment
 
 
 urlpatterns = [
     # See swagger documentation, there are three RESTful URL's
     url(r'^api/v1/payments/card/$', make_card_payment),
-    url(r'^api/v1/payments/paypal/$', make_paypal_payment),
     url(r'^api/v1/payments/api-key/$', change_api_key),
 
     # Below regex pulls out id to be used in request as id, see get_payment parameter

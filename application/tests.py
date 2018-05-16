@@ -9,7 +9,6 @@ import json
 import random
 import string
 import unittest
-import requests
 
 from django.conf import settings
 from django.test import Client
@@ -126,49 +125,3 @@ class TestApi(unittest.TestCase):
         # This test is meant to fail
         self.assertEqual(response.status_code, 400)
 
-    # def test_paypal_request(self):
-    #     """
-    #     A test for sending and processing a valid paypal request, this should return a 201 response to be asserted
-    #     :return: a success or fail value to the test runner to be reported on completion (see assert on response code)
-    #     """
-    #     self.client = Client()
-    #     header = {'content-type': 'application/json'}
-    #     request = {
-    #         "shopperCountryCode": "GB",
-    #         "amount": 50000,
-    #         "currencyCode": "GBP",
-    #         "customerOrderCode": "OFS-MORE-162738",
-    #         "orderDescription": "Childminder Registration Fee",
-    #         "successUrl": "https://ofsted.gov.uk/payment-success",
-    #         "pendingUrl": "https://ofsted.gov.uk/payment-pending",
-    #         "failureUrl": "https://ofsted.gov.uk/payment-failed",
-    #         "cancellationUrl": "https://ofsted.gov.uk/payment-cancel"
-    #     }
-    #     response = self.client.post(settings.URL_PREFIX + '/api/v1/payments/paypal/', json.dumps(request),
-    #                                 'application/json', header=header)
-    #
-    #     self.assertEqual(response.status_code, 201)
-
-    def test_paypal_request_failure(self):
-        """
-        A test for sending and processing an invalid paypal request, this should return a 400 response to be asserted,
-        the shopperCountryCode line had been invalidated to "FAILURE PLEASE"
-        :return: a success or fail value to the test runner to be reported on completion (see assert on response code)
-        """
-        self.client = Client()
-        header = {'content-type': 'application/json'}
-        request = {
-            "shopperCountryCode": "FAILURE PLEASE",
-            "amount": 50000,
-            "currencyCode": "GBP",
-            "customerOrderCode": "OFS-MORE-162738",
-            "orderDescription": "Childminder Registration Fee",
-            "successUrl": "https://ofsted.gov.uk/payment-success",
-            "pendingUrl": "https://ofsted.gov.uk/payment-pending",
-            "failureUrl": "https://ofsted.gov.uk/payment-failed",
-            "cancellationUrl": "https://ofsted.gov.uk/payment-cancel"
-        }
-        response = self.client.post(settings.URL_PREFIX + '/api/v1/payments/paypal/', json.dumps(request),
-                                    'application/json', header=header)
-
-        self.assertEqual(response.status_code, 400)
