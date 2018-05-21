@@ -76,7 +76,9 @@ def get_payment(request, payment_id):
     payment_service_result_reply = payment_service_result.get('reply')
 
     if 'error' in payment_service_result_reply.get('orderStatus'):
-        if payment_service_result_reply.get('orderStatus').get('error').get('@code') == '5':
+        error_code = payment_service_result_reply.get('orderStatus').get('error').get('@code')
+        error_message = payment_service_result_reply.get('orderStatus').get('error').get('#text')
+        if error_code == '5' and error_message == 'Could not find payment for order':
             return JsonResponse(
                 {
                     "message": 'Payment not found',
