@@ -1,6 +1,5 @@
 from .base import *
 
-#WORLDPAY_API_KEY = os.environ.get('WORLDPAY_API_KEY')
 
 DEBUG = True
 
