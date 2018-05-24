@@ -198,7 +198,7 @@
         },
         "customerOrderCode": {
           "type": "string",
-          "example": "CM1834728"
+          "example": "MORE:CM1834728:20180524121501"
         },
         "orderDescription": {
           "type": "string",
@@ -211,7 +211,7 @@
       "properties": {
         "customerOrderCode": {
           "type": "string",
-          "example": "CM1834728"
+          "example": "MORE:CM1834728:20180524121501"
         }
       }
     },
@@ -220,7 +220,7 @@
       "properties": {
         "customerOrderCode": {
           "type": "string",
-          "example": "CM1834728"
+          "example": "MORE:CM1834728:20180524121501"
         },
         "paymentMethod": {
           "type": "string",
