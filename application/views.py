@@ -69,7 +69,7 @@ def get_payment(request, payment_id):
     payload = __build_get_payment_request(payment_id)
     headers = {"content-type": "text/xml"}
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
-                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
+                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
 
     dictionary = xmltodict.parse(response.text)
     payment_service_result = dictionary.get('paymentService')
@@ -184,7 +184,7 @@ def __create_worldpay_card_order_request(card_payment_request):
     payload = __build_worldpay_card_payment_xml(card_payment_request)
     headers = {"content-type": "text/xml"}
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
-                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
+                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
     dictionary = xmltodict.parse(response.text)
 
     payment_service_result = dictionary.get('paymentService')
