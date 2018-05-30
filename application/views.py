@@ -69,7 +69,7 @@ def get_payment(request, payment_id):
     payload = __build_get_payment_request(payment_id)
     headers = {"content-type": "text/xml"}
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
-                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
+                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
 
     dictionary = xmltodict.parse(response.text)
     payment_service_result = dictionary.get('paymentService')
@@ -155,7 +155,11 @@ def make_card_payment(request):
             # If dev environment mock the answer from worldpay
             if hasattr(settings, 'DEV_MODE'):
                 if settings.DEV_MODE:
-                    return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
+                    return JsonResponse(
+                        {
+                            "orderCode": str(uuid.uuid4())
+                         }, status=201
+                    )
 
             return __create_worldpay_card_order_request(mapped_json_request)
 
@@ -180,7 +184,7 @@ def __create_worldpay_card_order_request(card_payment_request):
     payload = __build_worldpay_card_payment_xml(card_payment_request)
     headers = {"content-type": "text/xml"}
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
-                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD))
+                             auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
     dictionary = xmltodict.parse(response.text)
 
     payment_service_result = dictionary.get('paymentService')
@@ -194,12 +198,22 @@ def __create_worldpay_card_order_request(card_payment_request):
             }, status=500
         )
     else:
-        return JsonResponse(
-            {
-                "customerOrderCode": payment_service_result_reply.get('orderStatus').get('@orderCode')
-            }
-            , status=201)
-
+        # Attempt to parse Worldpay order response
+        try:
+            return JsonResponse(
+                {
+                    "customerOrderCode": payment_service_result_reply.get('orderStatus').get('@orderCode'),
+                    "lastEvent": payment_service_result_reply.get('orderStatus').get('payment').get('lastEvent')
+                }
+                , status=201)
+        except:
+            # Yield 500 if response parsing fails
+            return JsonResponse(
+                {
+                    "message": 'Internal Server error',
+                    "error": payment_service_result_reply.get('error').get('#text')
+                }, status=500
+            )
 
 def __build_worldpay_card_payment_xml(card_payment_request):
     """
