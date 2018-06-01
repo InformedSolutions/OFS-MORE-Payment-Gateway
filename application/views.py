@@ -215,6 +215,7 @@ def __create_worldpay_card_order_request(card_payment_request):
                 }, status=500
             )
 
+
 def __build_worldpay_card_payment_xml(card_payment_request):
     """
     Helper method for creating an XML request object for dispatch to the Worldpay API
@@ -248,6 +249,9 @@ def __build_worldpay_card_payment_xml(card_payment_request):
 
     card_holder = etree.SubElement(card_ssl, 'cardHolderName')
     card_holder.text = str(card_payment_request['card_holder_name'])
+
+    cvc = etree.SubElement(card_ssl, 'cvc')
+    cvc.text = str(card_payment_request['cvc'])
 
     # Append DTD heading to request
     xml_string = etree.tostring(
