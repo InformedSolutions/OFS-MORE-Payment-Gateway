@@ -102,4 +102,4 @@ TEST_OUTPUT_VERBOSE = True
 TEST_OUTPUT_DESCRIPTIONS = True
 TEST_OUTPUT_DIR = 'xmlrunner'
 
-DEV_MOVE = os.environ.get('DEV_MODE', False)
+DEV_MODE = os.environ.get('DEV_MODE', False)
