@@ -212,6 +212,10 @@
         "customerOrderCode": {
           "type": "string",
           "example": "MORE:CM1834728:20180524121501"
+        },
+        "lastEvent": {
+          "type": "string",
+          "example": "AUTHORISED"
         }
       }
     },

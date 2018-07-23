@@ -30,7 +30,7 @@ class TestApi(unittest.TestCase):
         # http://support.worldpay.com/support/kb/bg/testandgolive/tgl5103.html
         request = {
             "amount": 50000,
-            "cardHolderName": "Mr Example Cardholder",
+            "cardHolderName": "AUTHORISED",
             "cardNumber": 5454545454545454,
             "cvc": 353,
             "expiryMonth": 6,
