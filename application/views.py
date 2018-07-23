@@ -161,6 +161,8 @@ def make_card_payment(request):
                             "lastEvent": "AUTHORISED"
                          }, status=201
                     )
+                  
+                    return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
 
             return __create_worldpay_card_order_request(mapped_json_request)
 
