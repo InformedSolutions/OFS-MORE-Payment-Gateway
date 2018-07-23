@@ -190,6 +190,9 @@ def __create_worldpay_card_order_request(card_payment_request):
                              auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
     dictionary = xmltodict.parse(response.text)
 
+    log.debug('Received response from worldpay: ')
+    log.debug(str(response))
+
     payment_service_result = dictionary.get('paymentService')
     payment_service_result_reply = payment_service_result.get('reply')
 
