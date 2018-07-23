@@ -191,7 +191,7 @@ def __create_worldpay_card_order_request(card_payment_request):
     dictionary = xmltodict.parse(response.text)
 
     log.debug('Received response from worldpay: ')
-    log.debug(str(response))
+    log.debug(str(dictionary))
 
     payment_service_result = dictionary.get('paymentService')
     payment_service_result_reply = payment_service_result.get('reply')

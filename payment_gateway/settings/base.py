@@ -115,22 +115,31 @@ LOGGING = {
             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
         },
         },
-  'handlers': {
-    'django.server': {
-        'level': 'INFO',
-        'class': 'logging.handlers.RotatingFileHandler',
-        'maxBytes': 1 * 1024 * 1024,
-        'filename': 'logs/output.log',
-        'formatter': 'console',
-        'maxBytes': 1 * 1024 * 1024,
-        'backupCount': 30
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1 * 1024 * 1024,
+            'filename': 'logs/output.log',
+            'formatter': 'console',
+            'maxBytes': 1 * 1024 * 1024,
+            'backupCount': 30
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
     },
-   },
-  'loggers': {
-     '': {
-       'handlers': ['django.server'],
-         'level': 'INFO',
-           'propagate': True,
-      },
+    'loggers': {
+        '': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     },
 }
