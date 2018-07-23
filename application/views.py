@@ -157,12 +157,10 @@ def make_card_payment(request):
                 if settings.DEV_MODE == 'True':
                     return JsonResponse(
                         {
-                            "orderCode": request['customerOrderCode'],
+                            "orderCode": request.data['customerOrderCode'],
                             "lastEvent": "AUTHORISED"
                          }, status=201
                     )
-                  
-                    return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
 
             return __create_worldpay_card_order_request(mapped_json_request)
 
