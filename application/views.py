@@ -154,10 +154,11 @@ def make_card_payment(request):
 
             # If dev environment mock the answer from worldpay
             if hasattr(settings, 'DEV_MODE'):
-                if settings.DEV_MODE:
+                if settings.DEV_MODE == 'True':
                     return JsonResponse(
                         {
-                            "orderCode": str(uuid.uuid4())
+                            "orderCode": request['customerOrderCode'],
+                            "lastEvent": "AUTHORISED"
                          }, status=201
                     )
                   
