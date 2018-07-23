@@ -21,7 +21,7 @@ from .utilities import Utilities
 from lxml import etree
 
 # initiate logging
-log = logging.getLogger('django.server')
+log = logging.getLogger('')
 
 # Initiate worldpay endpoint URL
 WORLDPAY_PAYMENT_ENDPOINT = settings.WORLDPAY_PAYMENT_ENDPOINT
