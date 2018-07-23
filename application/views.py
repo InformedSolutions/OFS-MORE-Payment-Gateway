@@ -157,7 +157,7 @@ def make_card_payment(request):
                 if settings.DEV_MODE == 'True':
                     return JsonResponse(
                         {
-                            "orderCode": request['customerOrderCode'],
+                            "orderCode": request.data['customerOrderCode'],
                             "lastEvent": "AUTHORISED"
                          }, status=201
                     )
