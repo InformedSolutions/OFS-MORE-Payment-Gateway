@@ -160,6 +160,8 @@ def make_card_payment(request):
                             "orderCode": str(uuid.uuid4())
                          }, status=201
                     )
+                  
+                    return JsonResponse({"orderCode": str(uuid.uuid4())}, status=201)
 
             return __create_worldpay_card_order_request(mapped_json_request)
 
@@ -214,7 +216,6 @@ def __create_worldpay_card_order_request(card_payment_request):
                     "error": payment_service_result_reply.get('error').get('#text')
                 }, status=500
             )
-
 
 def __build_worldpay_card_payment_xml(card_payment_request):
     """
