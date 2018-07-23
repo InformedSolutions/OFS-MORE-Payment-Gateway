@@ -21,7 +21,7 @@ from .utilities import Utilities
 from lxml import etree
 
 # initiate logging
-log = logging.getLogger('django.server')
+log = logging.getLogger('')
 
 # Initiate worldpay endpoint URL
 WORLDPAY_PAYMENT_ENDPOINT = settings.WORLDPAY_PAYMENT_ENDPOINT
@@ -154,10 +154,11 @@ def make_card_payment(request):
 
             # If dev environment mock the answer from worldpay
             if hasattr(settings, 'DEV_MODE'):
-                if settings.DEV_MODE:
+                if settings.DEV_MODE == 'True':
                     return JsonResponse(
                         {
-                            "orderCode": str(uuid.uuid4())
+                            "orderCode": request.data['customerOrderCode'],
+                            "lastEvent": "AUTHORISED"
                          }, status=201
                     )
                   
@@ -188,6 +189,9 @@ def __create_worldpay_card_order_request(card_payment_request):
     response = requests.post(WORLDPAY_PAYMENT_ENDPOINT, data=payload, headers=headers,
                              auth=(WORLDPAY_XML_USERNAME, WORLDPAY_XML_PASSWORD), timeout=int(settings.REQUEST_TIMEOUT))
     dictionary = xmltodict.parse(response.text)
+
+    log.debug('Received response from worldpay: ')
+    log.debug(str(dictionary))
 
     payment_service_result = dictionary.get('paymentService')
     payment_service_result_reply = payment_service_result.get('reply')

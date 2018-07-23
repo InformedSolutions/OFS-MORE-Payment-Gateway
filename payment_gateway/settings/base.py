@@ -104,3 +104,42 @@ TEST_OUTPUT_DESCRIPTIONS = True
 TEST_OUTPUT_DIR = 'xmlrunner'
 
 DEV_MODE = os.environ.get('DEV_MODE', False)
+
+# Automatic Django logging at the INFO level (i.e everything the comes to the console when ran locally)
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+    'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+        },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1 * 1024 * 1024,
+            'filename': 'logs/output.log',
+            'formatter': 'console',
+            'maxBytes': 1 * 1024 * 1024,
+            'backupCount': 30
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
