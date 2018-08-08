@@ -198,7 +198,7 @@
         },
         "customerOrderCode": {
           "type": "string",
-          "example": "MORE:CM1834728:20180524121501"
+          "example": "MO:EY1834728:20180524121501"
         },
         "orderDescription": {
           "type": "string",
@@ -211,7 +211,7 @@
       "properties": {
         "customerOrderCode": {
           "type": "string",
-          "example": "MORE:CM1834728:20180524121501"
+          "example": "MO:EY1834728:20180524121501"
         },
         "lastEvent": {
           "type": "string",
