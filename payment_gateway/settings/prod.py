@@ -21,4 +21,4 @@ INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + PROD_APPS + PROJECT_APPS
 MIDDLEWARE = MIDDLEWARE + PROD_MIDDLEWARE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5xfw@*imgau)r!_h^i4p!gh0&e9s75!j6j3@g+7yri1jetk1%b'
+SECRET_KEY = os.environ.get('SECRET_KEY')

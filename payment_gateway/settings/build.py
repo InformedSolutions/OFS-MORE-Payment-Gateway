@@ -2,7 +2,7 @@ from .base import *
 
 WORLDPAY_API_KEY = os.environ.get('WORLDPAY_API_KEY')
 
-DEBUG = True
+DEBUG = False
 
 TEST_MODE = True
 
@@ -11,11 +11,9 @@ PUBLIC_APPLICATION_URL = 'http://localhost:8000/payment-service'
 INTERNAL_IPS = "127.0.0.1"
 
 DEV_APPS = [
-  'debug_toolbar'
 ]
 
 MIDDLEWARE_DEV = [
-  'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 MIDDLEWARE = MIDDLEWARE + MIDDLEWARE_DEV
